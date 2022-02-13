@@ -1,0 +1,55 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="/css/milligram.css">
+  <script defer src="/js/alpine.min.js"></script>
+  <script src="/js/helpers.js"></script>
+</head>
+
+<body x-data="{ message: 'Counter', count: 0 }">
+  <div class="container">
+    <h1 x-text="message + ' x ' + count"></h1>
+    <div>
+      <button x-on:click="count++" test="test message">Increment</button>
+      <span x-text="count"></span>
+    </div>
+    <div>
+      <button x-data="{counta: 1}" x-on:click="()=> {count + counta; console.log($event.target); console.log($event.target.getAttribute('test'))}" test="test message">Increment</button>
+      <span x-text="count"></span>
+    </div>
+    <div x-data="{
+      status: false
+    }">
+      <button @mouseenter="status = !status" @mouseleave="status = !status">Status: <span x-text="status"></span></button>
+      <button @mouseenter.debounce="status = !status" @mouseleave.debounce="status = !status">Status: <span x-text="status"></span></button>
+    </div>
+    <div>
+      <button @click="log">Log A</button>
+      <button @click="e => log(e)">Log B</button>
+    </div>
+    <hr>
+    <div x-data="{open: false, input: null}">
+      <div>
+        <button @click="open = ! open">Toggle</button>
+        <span x-show="open" @click.outside="open = false"> Contents..: .outside event listener</span>
+      </div>
+      <div>
+        <span>x-model: "bind" data</span>
+        <input x-model="input" placeholder="Input..." style="display: inline; width: auto;">
+        <span x-text="`Input 1: ${input}`"></span> | Input 2: <span x-text="input"></span>
+      </div>
+      <div>
+        <h3>Imported Helper Function</h3>
+        <div>reversed Input: <span x-text="reverseString(input)"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function log(event) {
+      console.log(event.target);
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<html>
+
+<head>
+  <!-- <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"> -->
+  <link rel="stylesheet" href="/css/milligram.css">
+  <script defer src="/js/alpine.min.js"></script>
+  <script src="/js/helpers.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <h3>Fetch Data (i.e. local JSON)</h3>
+    <div x-data="{books: [], isLoading: false}" x-init="
+            isLoading = true;
+            fetch('https://www.googleapis.com/books/v1/volumes?q=Svelte')
+            .then(response => response.json())
+            .then(data => {
+              books = data.items.map(item => item.volumeInfo);
+              isLoading = false;
+            })">
+      <div x-show="isLoading">Loading...</div>
+      <ul>
+        <template x-for="book in books">
+          <details>
+            <summary><span x-text="book.title"></span> | <span x-text="book.authors"></span>
+            </summary>
+            <blockquote x-text="Object.keys(book)"></blockquote>
+            <p x-text="book.description"></p>
+          </details>
+        </template>
+      </ul>
+    </div>
+  </div>
+</body>
+
+</html>

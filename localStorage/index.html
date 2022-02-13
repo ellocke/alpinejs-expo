@@ -1,0 +1,39 @@
+<html>
+
+<head>
+  <!-- <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"> -->
+  <link rel="stylesheet" href="/css/milligram.css">
+  <script defer src="/js/alpine.min.js"></script>
+  <script src="/js/helpers.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <h2>TODO App with Local Storage</h2>
+    <div x-data="{ newTodo: '', todos: JSON.parse(localStorage.getItem('todos') || '[]') }" x-init="$watch('todos', (val) => localStorage.setItem('todos', JSON.stringify(val)))">
+      <div>
+        <code>localStorage.getItem('todos')</code>: <code x-text="localStorage.getItem('todos')"></code></div>
+      <div>
+        <button @click="todos = []; localStorage.removeItem('todos');"> Clear </button>
+      </div>
+      <form @submit.stop.prevent="todos = [].concat({ id: badId(), text: newTodo }, todos); newTodo = '';">
+        <input x-model="newTodo" />
+        <button>Add</button>
+      </form>
+      <ul>Todos: <template x-for="todo in todos" :key="todo.id">
+          <li>
+            <span x-text="todo.text"></span>
+            <button @click="todos = todos.filter(t => t.id !== todo.id)">x</button>
+          </li>
+        </template>
+      </ul>
+    </div>
+  </div>
+</body>
+<script>
+  function badId() {
+    return (Math.random() * 100).toFixed(0);
+  }
+</script>
+
+</html>
