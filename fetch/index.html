@@ -8,6 +8,10 @@
 </head>
 
 <body>
+  <header>
+    <nav class="nav"><span></span> <a href="/">Intro</a> | <a href="/fetch">Fetch</a> | <a href="/localStorage">localStorage</a></nav>
+    <hr>
+  </header>
   <div class="container">
     <h3>Fetch Data (i.e. local JSON)</h3>
     <div x-data="{books: [], isLoading: false}" x-init="
@@ -19,12 +23,12 @@
               isLoading = false;
             })">
       <div x-show="isLoading">Loading...</div>
+      <blockquote style="max-width: 100%; word-break:break-all;">Keys: <span x-text="Object.keys(books[0])"></span></blockquote>
       <ul>
         <template x-for="book in books">
           <details>
-            <summary><span x-text="book.title"></span> | <span x-text="book.authors"></span>
+            <summary><span x-text="book.title"></span> | <span x-text="book.authors ? book.authors : ' - '"></span>
             </summary>
-            <blockquote x-text="Object.keys(book)"></blockquote>
             <p x-text="book.description"></p>
           </details>
         </template>

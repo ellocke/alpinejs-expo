@@ -8,6 +8,10 @@
 </head>
 
 <body>
+  <header>
+    <nav class="nav"><span></span> <a href="/">Intro</a> | <a href="/fetch">Fetch</a> | <a href="/localStorage">localStorage</a></nav>
+    <hr>
+  </header>
   <div class="container">
     <h2>TODO App with Local Storage</h2>
     <div x-data="{ newTodo: '', todos: JSON.parse(localStorage.getItem('todos') || '[]') }" x-init="$watch('todos', (val) => localStorage.setItem('todos', JSON.stringify(val)))">
