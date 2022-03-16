@@ -61,8 +61,9 @@
     document.addEventListener("click", (event) => {
       if (event.target.tagName === 'A' && event.target.origin === location.origin) {
         event.preventDefault();
-        console.log(event.target.href);
+        const path = event.target.pathname
         fetch(event.target.href).then(response => response.text()).then(payload => {
+          window.history.pushState(path, path, path);
           const newNode = new DOMParser().parseFromString(payload, "text/html").querySelector("div.container");
           console.log(newNode);
           const rootNode = document.querySelector("div.container");
