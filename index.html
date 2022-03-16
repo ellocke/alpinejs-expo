@@ -48,7 +48,7 @@
           <span x-text="`Input 1: ${input}`"></span> | Input 2: <span x-text="input"></span>
         </div>
         <div>
-          <div>reversed Input <span x-text="`(${input.length})`"></span>: <span x-text="input?.length > 0 ? reverseString(input) : 'Enter something in the input field'"></span>
+          <div>reversed Input <span x-text="`(${input?.length})`"></span>: <span x-text="input?.length > 0 ? reverseString(input) : 'Enter something in the input field'"></span>
           </div>
         </div>
       </div>
@@ -58,6 +58,20 @@
     function log(event) {
       console.log(event.target);
     }
+    document.addEventListener("click", (event) => {
+      if (event.target.tagName === 'A' && event.target.origin === location.origin) {
+        event.preventDefault();
+        console.log(event.target.href);
+        fetch(event.target.href).then(response => response.text()).then(payload => {
+          const newNode = new DOMParser().parseFromString(payload, "text/html").querySelector("div.container");
+          console.log(newNode);
+          const rootNode = document.querySelector("div.container");
+          console.log(rootNode);
+          document.body.replaceChild(newNode, rootNode);
+          window.scrollTo(0, 0)
+        })
+      }
+    })
   </script>
 </body>
 

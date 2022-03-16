@@ -23,7 +23,7 @@
               isLoading = false;
             })">
       <div x-show="isLoading">Loading...</div>
-      <blockquote style="max-width: 100%; word-break:break-all;">Keys: <span x-text="Object.keys(books[0])"></span></blockquote>
+      <blockquote style="max-width: 100%; word-break:break-all;">Keys: <span x-text="books.length ? Object.keys(books[0]) : ''"></span></blockquote>
       <ul>
         <template x-for="book in books">
           <details>
