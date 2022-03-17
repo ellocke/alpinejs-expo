@@ -1,6 +1,12 @@
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AlpineJS Playground</title>
+  <meta name="description" content="Minimalist exploration of AlpineJS">
+  <meta name="author" content="@fubits">
   <!-- <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"> -->
   <link rel="stylesheet" href="/css/milligram.css">
   <script defer src="/js/alpine.min.js"></script>
@@ -13,7 +19,7 @@
     <hr>
   </header>
   <div class="container">
-    <h3>Fetch Data (i.e. local JSON)</h3>
+    <h3>Fetch Data (i.e. local JSON, remote API)</h3>
     <div x-data="{books: [], isLoading: false}" x-init="
             isLoading = true;
             fetch('https://www.googleapis.com/books/v1/volumes?q=Svelte')
