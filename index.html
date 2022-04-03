@@ -40,7 +40,7 @@
       <button @click="e => log(e)">Log B</button>
     </div>
     <hr>
-    <div x-data="{open: false, input: null}">
+    <div x-data="{open: false, inputTxt: null}">
       <div>
         <button @click="open = ! open">Toggle</button>
         <span x-show="open" @click.outside="open = false">span block: .outside event listener</span>
@@ -51,11 +51,11 @@
         <h3>Imported Helper Function</h3>
         <div>
           <span>x-model: "bind" data</span>
-          <input x-model="input" placeholder="Input..." style="display: inline; width: auto;">
-          <span x-text="`Input 1: ${input}`"></span> | Input 2: <span x-text="input"></span>
+          <input x-model="inputTxt" placeholder="Input..." style="display: inline; width: auto;" type="text">
+          <span x-text="`Input 1: ${inputTxt}`"></span> | Input 2: <span x-text="inputTxt"></span>
         </div>
         <div>
-          <div>reversed Input <span x-text="`(${input?.length})`"></span>: <span x-text="input?.length > 0 ? reverseString(input) : 'Enter something in the input field'"></span>
+          <div>Reversed Input<span x-show="inputTxt !== null" x-text="` (${inputTxt.length})`"></span>: <span x-text="inputTxt?.length > 0 ? reverseString(inputTxt) : 'Enter something in the input field'"></span>
           </div>
         </div>
       </div>
