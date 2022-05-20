@@ -49,7 +49,7 @@
       <div>
         <button @click="open = ! open">Toggle</button>
         <span x-show="open" @click.outside="open = false">span block: .outside event listener</span>
-        <blockquote x-show="open" @click.outside="open = false">blockquote: .outside event listener</blockquote>
+        <blockquote x-show="open" @click.outside="open = false" x-transition.scale.50.origin.left>blockquote: .outside event listener</blockquote>
       </div>
       <hr>
       <div>
