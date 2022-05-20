@@ -9,7 +9,7 @@
   <meta name="author" content="@fubits">
   <!-- <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"> -->
   <link rel="stylesheet" href="/css/milligram.css">
-  <script defer src="/js/alpine.min.js"></script>
+  <script src="/js/alpine.min.js"></script>
   <script src="/js/helpers.js"></script>
 </head>
 
@@ -20,6 +20,11 @@
   </header>
   <h2>AlpineJS Experiments</h2>
   <div class="container">
+    <h3>Direct access</h3>
+    <p class="center">
+      <span id="reactiveTest">Test</span>
+      <button id="reactiveButton">+</button>
+    </p>
     <h3 x-text="message + ' x ' + count"></h3>
     <div>
       <button x-on:click="count++" test="test message">Increment A</button>
@@ -80,6 +85,23 @@
         })
       }
     })
+  </script>
+  <script>
+    (function () {
+      let button = document.getElementById('reactiveButton');
+      let span = document.getElementById('reactiveTest');
+      let body = document.getElementsByTagName("html")[0];
+      let data = Alpine.reactive({
+        count: 10
+      });
+      Alpine.effect(() => {
+        span.textContent = `Alpine.effect(): ${data.count} px`;
+        body.style.fontSize = data.count + "px";
+      });
+      button.addEventListener('click', () => {
+        data.count++
+      })
+    })();
   </script>
 </body>
 
