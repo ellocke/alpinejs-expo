@@ -11,6 +11,13 @@
   <link rel="stylesheet" href="/css/milligram.css">
   <script defer src="/js/alpine.min.js"></script>
   <script src="/js/helpers.js"></script>
+  <style>
+    .dark-mode {
+      background-color: black;
+      border-color: black;
+      color: white;
+    }
+  </style>
 </head>
 
 <body>
@@ -18,7 +25,21 @@
     <nav class="nav"><span></span> <a href="/">Intro</a> | <a href="/fetch">Fetch</a> | <a href="/localStorage">localStorage</a> | <a href="/store">Store</a></nav>
     <hr>
   </header>
-  <div class="container"></div>
+  <div class="container" x-data :class="$store.darkMode.on ? 'dark-mode' : ''">
+    <h3>Alpine.store() & Alpine.data()</h3>
+    <p>$store.darkMode: <span x-text="$store.darkMode.on">loading</span></p>
+    <button @click=" $store.darkMode.toggle()" :class="$store.darkMode.on ? '' : 'dark-mode'">Toggle darkMode</button>
+  </div>
 </body>
+<script>
+  document.addEventListener("alpine:init", () => {
+    Alpine.store('darkMode', {
+      on: false,
+      toggle() {
+        this.on = !this.on
+      }
+    })
+  });
+</script>
 
 </html>
