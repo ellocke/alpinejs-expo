@@ -18,7 +18,7 @@
     <hr>
   </header>
   <div class="container">
-    <h3>Fetch Data (i.e. local JSON, remote API)</h3>
+    <h3>Fetch Data on Alpine.init() (i.e. local JSON, remote API)</h3>
     <div x-data="{books: [], isLoading: false}" x-init="
             isLoading = true;
             fetch('https://www.googleapis.com/books/v1/volumes?q=Svelte')
@@ -28,12 +28,14 @@
               isLoading = false;
             })">
       <div x-show="isLoading">Loading...</div>
-      <blockquote style="max-width: 100%; word-break:break-all;">Keys: <span x-text="books.length ? Object.keys(books[0]) : ''"></span></blockquote>
+      <details style="max-width: 100%; word-break:break-all;">
+        <summary>Keys:</summary><span x-text="books.length ? Object.keys(books[0]) : ''"></span>
+      </details>
+      <hr>
       <ul>
         <template x-for="book in books">
           <details>
-            <summary><span x-text="book.title"></span> | <span x-text="book.authors ? book.authors : ' - '"></span>
-            </summary>
+            <summary><span x-text="book.title"></span> | <span x-text="book.authors ? book.authors : ' - '"></span> (<span x-text="book.publishedDate"></span>) </summary>
             <p x-text="book.description"></p>
           </details>
         </template>
