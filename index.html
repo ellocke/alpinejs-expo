@@ -9,11 +9,11 @@
   <meta name="author" content="@fubits">
   <!-- <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"> -->
   <link rel="stylesheet" href="/css/milligram.css">
-  <script src="/js/alpine.min.js"></script>
+  <script defer src="/js/alpine.min.js"></script>
   <script src="/js/helpers.js"></script>
 </head>
 
-<body x-data="{ message: 'Counter', count: 0 }">
+<body x-data="{ message: 'Counter', count: 0}">
   <header>
     <nav class="nav"><span></span> <a href="/">Intro</a> | <a href="/fetch">Fetch</a> | <a href="/localStorage">localStorage</a></nav>
     <hr>
@@ -23,7 +23,8 @@
     <h3>Direct access</h3>
     <p class="center">
       <span id="reactiveTest">Test</span>
-      <button id="reactiveButton">+</button>
+      <button id="reactiveButtonMinus">-</button>
+      <button id="reactiveButtonPlus">+</button>
     </p>
     <h3 x-text="message + ' x ' + count"></h3>
     <div>
@@ -60,7 +61,7 @@
           <span x-text="`Input 1: ${inputTxt}`"></span> | Input 2: <span x-text="inputTxt"></span>
         </div>
         <div>
-          <div>Reversed Input<span x-show="inputTxt !== null" x-text="` (${inputTxt.length})`"></span>: <span x-text="inputTxt?.length > 0 ? reverseString(inputTxt) : 'Enter something in the input field'"></span>
+          <div>Reversed Input<span x-show="inputTxt !== null" x-text="` (${inputTxt && inputTxt.length})`"></span>: <span x-text="inputTxt?.length > 0 ? reverseString(inputTxt) : 'Enter something in the input field'"></span>
           </div>
         </div>
       </div>
@@ -72,6 +73,7 @@
     }
     document.addEventListener("click", (event) => {
       if (event.target.tagName === 'A' && event.target.origin === location.origin) {
+        console.log("Mock SPA Page Change");
         event.preventDefault();
         const path = event.target.pathname
         fetch(event.target.href).then(response => response.text()).then(payload => {
@@ -87,10 +89,14 @@
     })
   </script>
   <script>
-    (function () {
+    /** (function () {
+
+    })(); */
+    document.addEventListener('alpine:init', () => {
       let button = document.getElementById('reactiveButton');
       let span = document.getElementById('reactiveTest');
       let body = document.getElementsByTagName("html")[0];
+      console.log('alpine:init');
       let data = Alpine.reactive({
         count: 10
       });
@@ -98,10 +104,13 @@
         span.textContent = `Alpine.effect(): ${data.count} px`;
         body.style.fontSize = data.count + "px";
       });
-      button.addEventListener('click', () => {
+      document.getElementById('reactiveButtonPlus').addEventListener('click', () => {
         data.count++
-      })
-    })();
+      });
+      document.getElementById('reactiveButtonMinus').addEventListener('click', () => {
+        data.count--
+      });
+    });
   </script>
 </body>
 
